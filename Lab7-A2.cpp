@@ -13,67 +13,88 @@ int main(void) {
 	int x = 0;
 	int y = 0;
 	int minutes;
+	int seconds;
+	int numsteps;
+	double distance = 0;
+	double distance1 = 0;
+	double avg;
 
 	cout << "Enter number of minutes for each drunkard to stagger: ";
 	cin >> minutes;
-	cout << endl;
+	seconds = minutes * 60;
 
 	srand(time(0));
-	while (drunk < 10) {
+	while (drunk < 10000) {
 		numdrunk++;
 		drunk = numdrunk;
-		cout << "Drunkard #" << drunk;
+
+		for (int i = 1; i <= 10; i++) {
+			for (int i = 0; i <= 8; i++) {
+				int iRand = ((rand() % 9) + 1);
+				movement = iRand;
 
 
-		for (int m = 0; m <= 8; m++) {
-			movement = rand() % 9;
+				//generate location of x and y coordinate
+				if (movement == 3) {
+					y++;
+				}
+				if (movement == 7) {
+					y--;
+				}
+				if (movement == 4) {
+					x++;
+					y++;
+				}
+				if (movement == 5) {
+					x++;
+				}
+				if (movement == 8) {
+					x++;
+					y--;
+				}
+				if (movement == 1) {
+					x--;
+				}
+				if (movement == 2) {
+					x--;
+					y++;
+				}
+				if (movement == 6) {
+					x--;
+					y--;
+				}
+				else if (movement == 0) {
+					x += 0;
+					y += 0;
+				}
+			}
 		}
-
-		//generate location of x and y coordinate
-		if (movement == 3) {
-			x = 0;
-			y++;
+		if (drunk == 1) {
+			numsteps = x + y;
+			if (numsteps > 0) {
+				distance = numsteps * 2.1;
+			} 
+			else if (numsteps < 0) {
+				distance = (-1) * (numsteps * 2.1);
+			}
+			distance = sqrt((((4 + 4 * sqrt(2)) / 8) * 8 / 9) * seconds);
+			cout << "Expected distance: " << distance << endl;
 		}
-		if (movement == 7) {
-			x = 0;
-			y--;
+		
+		for (drunk = 1; drunk <= 10000; drunk++) {
+			numsteps = x + y;
+			if (numsteps > 0) {
+				distance1 += numsteps * 2.1;
+			}
+			else if (numsteps < 0) {
+				distance1 += (-1) * (numsteps * 2.1);
+			}
+			numdrunk++;
+			drunk = numdrunk;
+			avg = distance1 / drunk;
+			
 		}
-		if (movement == 4) { 
-			x++;
-			y++;
-		}
-		if (movement == 5) {
-			x++;
-			y = 0;
-		}
-		if (movement == 8) {
-			x++;
-			y--;
-		}
-		if (movement == 1) {
-			x--;
-			y = 0;
-		}
-		if (movement == 2) {
-			x--;
-			y++;
-		}
-		if (movement == 6) {
-			x--;
-			y--;
-		}
-		else if (movement == 0) {
-			x = 0;
-			y = 0;
-		}
-		cout << " finished at location (" << x << ", " << y << ")" << endl;
+		cout << "average number is " << avg << endl;
 	}
-
-	//Calculate step distance
-	int numSteps = 0;
-	double distance;
-	numSteps = x * y;
-	distance = sqrt(numSteps * 2.1);
-	cout << "Expected distance: " << distance << endl;
-
+	
 }
